@@ -17,8 +17,8 @@ def summarize_pdf(pdf_file_path, custom_prompt_text):
     Summarizes a PDF using a user-provided prompt with Gemini.
     """
     # 1. Instantiate LLM model
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
+    #api_key = os.getenv("GEMINI_API_KEY")
+    if not GEMINI_API_KEY:
         st.error("GEMINI_API_KEY not found. Please set it in your API.env file.")
         return None
 
@@ -86,4 +86,5 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
