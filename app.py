@@ -10,7 +10,7 @@ from langchain.chains.summarize import load_summarize_chain
 from dotenv import load_dotenv
 
 # Load environment variables from API.env file
-load_dotenv('API.env')
+API_KEY = "AIzaSyDLYj037GdPF6_kSNie4q2Pn_XW36Tymlw"
 
 def summarize_pdf(pdf_file_path, custom_prompt_text):
     """
@@ -84,4 +84,5 @@ def main():
             os.remove(temp_file_path)
 
 if __name__ == "__main__":
+
     main()
