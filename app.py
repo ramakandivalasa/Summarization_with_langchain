@@ -10,7 +10,7 @@ from langchain.chains.summarize import load_summarize_chain
 from dotenv import load_dotenv
 
 # Load environment variables from API.env file
-GEMINI_API_KEY = "AIzaSyDLYj037GdPF6_kSNie4q2Pn_XW36Tymlw"
+api_key = "AIzaSyDLYj037GdPF6_kSNie4q2Pn_XW36Tymlw"
 
 def summarize_pdf(pdf_file_path, custom_prompt_text):
     """
@@ -18,7 +18,7 @@ def summarize_pdf(pdf_file_path, custom_prompt_text):
     """
     # 1. Instantiate LLM model
     #api_key = os.getenv("GEMINI_API_KEY")
-    if not GEMINI_API_KEY:
+    if not api_key:
         st.error("GEMINI_API_KEY not found. Please set it in your API.env file.")
         return None
 
@@ -86,5 +86,6 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
