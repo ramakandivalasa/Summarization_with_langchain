@@ -10,31 +10,28 @@ from langchain.chains.summarize import load_summarize_chain
 from dotenv import load_dotenv
 
 # Load environment variables from API.env file
-api_key = "AIzaSyDLYj037GdPF6_kSNie4q2Pn_XW36Tymlw"
+load_dotenv()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 def summarize_pdf(pdf_file_path, custom_prompt_text):
     """
     Summarizes a PDF using a user-provided prompt with Gemini.
     """
-    # 1. Instantiate LLM model
-    #api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
+    if not GEMINI_API_KEY:
         st.error("GEMINI_API_KEY not found. Please set it in your API.env file.")
         return None
 
     llm = ChatGoogleGenerativeAI(
         model="gemini-1.5-flash-latest",
         temperature=0.3,
-        google_api_key=api_key
+        google_api_key=GEMINI_API_KEY
     )
 
-    # 2. Load and split the PDF
     loader = PyPDFLoader(pdf_file_path)
     docs_chunks = loader.load_and_split(
         text_splitter=RecursiveCharacterTextSplitter(chunk_size=20000, chunk_overlap=1000)
     )
 
-    # 3. Create the prompt from the user's template
     prompt_template = custom_prompt_text + """
 
     {text}
@@ -42,7 +39,6 @@ def summarize_pdf(pdf_file_path, custom_prompt_text):
     """
     prompt = PromptTemplate.from_template(prompt_template)
 
-    # 4. Create and run the summarization chain
     chain = load_summarize_chain(llm, chain_type="stuff", prompt=prompt)
     
     result = chain.invoke({"input_documents": docs_chunks})
